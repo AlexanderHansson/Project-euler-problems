@@ -1,5 +1,6 @@
 #coding:utf-8
-
+#Version 2015-12-04
+#Author Alexander Hansson
 
 def Mul35(max=1000):
 	"""
