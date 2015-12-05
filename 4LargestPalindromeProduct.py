@@ -1,6 +1,6 @@
 #coding:utf-8
 #Author Alexander Hansson
-#Version 2015-12-04
+#Version 2015-12-05
 
 
 def main():
@@ -19,6 +19,7 @@ def find_largest_palindrome(num):
 	for i in range(num):
 		roof+=9*(10**i)
 	all_palindromes = []
+	##TODO:Optimize this, should not have to store all numbers and pick the biggest
 	for outer in range(roof,10**(num-1)-1,-1):
 		for inner in range(roof,10**(num-1)-1,-1):
 			if(is_palindrome(outer*inner)):
@@ -30,50 +31,33 @@ def find_largest_palindrome(num):
 			biggest = number
 	return biggest
 
+
 def is_palindrome(number):
 	"""checks if a number is a palindrome"""
-	parts = __divide_number(number)
-	firsthalf = parts[0]
-	secondhalf = __flip_number(parts[1])
-	if (firsthalf == secondhalf):
+	flippednum = __flip_number(number)
+	if (number == flippednum):
 		return True
 	else:
 		return False
-
-def int_length(number):
-	"""calculates number of digits in a number"""
-	len = 0
-	while(number!=0):
-		len+=1
-		number/=10
-	return len
 				
 def __flip_number(number):
 	"""flips a number, 123 = 321"""
 	newnumber = 0
 	i = 0
-	length = int_length(number)
+	length = __int_length(number)
 	while(number!=0):
 		newnumber+=(10**(length-i-1))*(number%10)
 		number/=10
 		i+=1
 	return newnumber
 
-def __divide_number(number):
-	"""divides a number in two parts, 123456 returns (123,456)"""
-	firsthalf = number
-	secondhalf = 0
-	length = int_length(number)
-	if length%2 == 0:#length is even
-		looprange = length/2
-	else:
-		looprange = length/2+1
-	for i in range(0,looprange):
-		secondhalf+=(10**i)*(firsthalf%10)
-		firsthalf/=10
-	firsthalf=number/(10**(length/2))
-	while(firsthalf%10==0):
-		firsthalf/=10
-	return (firsthalf,secondhalf)
-	
+def __int_length(number):
+	"""calculates number of digits in a number"""
+	len = 0
+	while(number!=0):
+		len+=1
+		number/=10
+	return len
+
+
 main()
