@@ -2,10 +2,9 @@
 #Author:Alexander Hansson
 #Version 2015-12-16 03:00
 
-from memoized import memoized
-from math import ceil,sqrt
+from math import sqrt
 from itertools import product
-
+import datetime
 
 """
 A perfect number is a number for which the sum of its proper divisors is exactly equal to the number. For example, the sum of the proper divisors of 28 would be 1 + 2 + 4 + 7 + 14 = 28, which means that 28 is a perfect number.
@@ -17,8 +16,17 @@ As 12 is the smallest abundant number, 1 + 2 + 3 + 4 + 6 = 16, the smallest numb
 Find the sum of all the positive integers which cannot be written as the sum of two abundant numbers.
 """
 
-limit=list(range(1,28190))
-@memoized
+
+
+class timeit(object):
+    def __enter__(self):
+        self.start=datetime.datetime.now()
+        
+    def __exit__(self, *args, **kwargs):
+        print datetime.datetime.now()-self.start
+
+
+limit=list(range(1,28123+1))
 def find_div(number):
     """finds all the divisors of a number"""
     div = [1]
@@ -29,15 +37,25 @@ def find_div(number):
                 div.append(number/i)
     return div
 
-#stores all abundant numbers in abn
-abn=[n for n in limit if n < sum(find_div(n))]
-
 
 #creates a list of all sums of two abundant numbers
-sums=map(lambda (x,y): x+y, product(abn, abn))
-sums=list(set(sums))
-sums = filter(lambda n: n<(max(limit)+1), sums)
+def makesums(abn, stop=10):
+    """creates a list of all sums of two abuntant numbers"""  
+    sum=[]
+    for i in range(len(abn)):
+        for j in range(i,len(abn)):
+            if abn[i]+abn[j]>stop:
+                break
+            sum.append(abn[i]+abn[j])
+    return frozenset(sum)
 
-#prints the sum of all numbers that are not sums of abuntant numbers
-print sum([n for n in limit if n not in sums])
+
+with timeit():
+    #stores all abundant numbers in abn
+    abn=[n for n in limit if n < sum(find_div(n))]
+
+    sums = makesums(abn,max(limit))
+
+    #prints the sum of all numbers that are not sums of abuntant numbers
+    print sum([n for n in limit if n not in sums])
 
