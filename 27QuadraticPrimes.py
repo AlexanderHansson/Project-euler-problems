@@ -8,15 +8,20 @@ from math import sqrt
 from itertools import product
 from functools import reduce
 
+primes={}
 def is_prime(num):
     """returns true if a number is a prime"""
-    if num <= 1:
-        return False
-    for i in range(2,int(sqrt(num))+1):
-        if num%i==0:
+    if primes.get(num) != None:
+        return True 
+    else:   
+        if num <= 1:
             return False
-    return True
-        
+        for i in range(2,int(sqrt(num))+1):
+            if num%i==0:
+                return False
+        primes[num] = num
+        return True
+            
 
 
 
