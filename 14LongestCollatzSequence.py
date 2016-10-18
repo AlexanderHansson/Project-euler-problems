@@ -10,7 +10,7 @@ n->3n+1 (n is odd)
 Using the starting number 13 we get the following sequence:
 13->40->20->10->5->16->8->4->2->1
 Find the largest collatz sequence under one million
-""""
+"""
 
 sequence = {}#static so we dont have to do things twice
 
