@@ -15,132 +15,30 @@ How many different ways can 2pounds be made using any number of coins?
 
 
 
-class twopound(object):
-    def __init__(self):
-        self.value = 200
-    def __del__(self):
-        pass
-    def get_value(self):
-        return self.value
-    def split(self):
-        return (onepound(), onepound())
-    def __str__(self):
-        return str(self.value)
-
-class onepound(object):
-    def __init__(self):
-        self.value = 100
-    def __del__(self):
-        pass
-    def get_value(self):
-        return self.value
-    def split(self):
-        return (fiftypence(), fiftypence())
-    def __str__(self):
-        return str(self.value)    
-           
-
-class fiftypence (object):
-    def __init__(self):
-        self.value = 50
-    def __del__(self):
-        pass
-    def get_value(self):
-        return self.value 
-    def split(self):
-        return (twentypence(), twentypence(), tenpence())
-    def __str__(self):
-        return str(self.value)
-
-class twentypence (object):
-    def __init__(self):
-        self.value = 50
-    def __del__(self):
-        pass
-    def get_value(self):
-        return self.value
-    def split(self):
-        return (tenpence(), tenpence())
-    def __str__(self):
-        return str(self.value)
 
 
+value = 200
+ways = 0
 
-class tenpence (object):
-    def __init__(self):
-        self.value = 50
-    def __del__(self):
-        pass
-    def get_value(self):
-        return self.value
-    def split(self):
-        return (fivepence(), fivepence())
-    def __str__(self):
-        return str(self.value)
+for twopo in [x*200 for x in range(value/200+1)]:
+    value = 200 - twopo
+    for onepo in [x*100 for x in range(value/100+1)]:
+        value = 200-twopo-onepo
+        for fiftypence in [x*50 for x in range(value/50+1)]:
+            value = 200-twopo-fiftypence
+            for twentypence in [x*20 for x in range(value/20+1)]:
+                value = 200-twopo-onepo-fiftypence-twentypence
+                for tenpence in [x*10 for x in range(value/10+1)]:
+                    value = 200-twopo-onepo-fiftypence-twentypence-tenpence
+                    for fivepence in [x*5 for x in range(value/5+1)]:
+                        value=200-twopo-onepo-fiftypence-twentypence-tenpence-fivepence
+                        for twopence in [x*2 for x in range(value/2+1)]:
+                            value=200-twopo-onepo-fiftypence-twentypence-tenpence-fivepence-twopence
+                            while(value>0):
+                                value-=1
+                            else:
+                                ways+=1
 
-
-
-class fivepence (object):
-    def __init__(self):
-        self.value = 50
-    def __del__(self):
-        pass
-    def get_value(self):
-        return self.value
-    def split(self):
-        return (twopence(), twopence(),onepence())
-    def __str__(self):
-        return str(self.value)
+print ways
 
 
-class twopence (object):
-    def __init__(self):
-        self.value = 50
-    def __del__(self):
-        pass
-    def get_value(self):
-        return self.value
-    def split(self):
-        return (onepence(), onepence())
-    def __str__(self):
-        return str(self.value)
-
-
-
-
-class onepence (object):
-    def __init__(self):
-        self.value = 50
-    def __del__(self):
-        pass
-    def get_value(self):
-        return self.value
-    def split(self):
-        return ()
-    def __str__(self):
-        return str(self.value)
-        
-        
-
-
-"""
-This is not working properly, find a way to recursively break down the
-coins to smaller coins, in a tree-structure
-every break-down should count as a new combination.
-However you cant just break down all at once, fix the algorithm
-
-"""
-def split(x, sum):
-    if len(x.split())>0:
-        sum = sum+1
-    for kid in x.split():
-        sum = split(kid,sum)
-    return sum
-
-
-
-
-coin = twopound()
-
-
-print split(coin,1)
