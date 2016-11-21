@@ -22,14 +22,11 @@ class prod(Object):
         self.n1 = n1
         self.n2 = n2
         self.prod = n1*n2
-    def __eq__(self,other):
-        return n1==other.n1 || n2==other.n2
+    __eq__ = lambda self, other: self.n1 == other.n1 || self.n2 ==other.n2
 
 
 
 #TODO:loopa genom alla tal och kolla om de är pandigiprodukter, hitta ett smart roof. använd dict 
-
-
 
     
        
