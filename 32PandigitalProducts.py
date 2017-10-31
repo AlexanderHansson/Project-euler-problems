@@ -1,32 +1,19 @@
+#!/usr/bin/Python
 #coding:utf-8
+"""
+We shall say that an n-digit number is pandigital if it makes use of all the digits 1 to n exactly once; for example, the 5-digit number, 15234, is 1 through 5 pandigital.
 
+The product 7254 is unusual, as the identity, 39 × 186 = 7254, containing multiplicand, multiplier, and product is 1 through 9 pandigital.
 
-def isPanDigi(num,num2):
-    print ""+str(num)+"*"+str(num2)+"="+str(num*num2) 
-    num = str(num) + str(num2) + str(num*num2)
-    num = int(num)
-    onetonine = [1,2,3,4,5,6,7,8,9]
-    ret = True;
-    while num>0:
-        if num%10 not in onetonine:
-            return False
-        else:
-            onetonine.remove(num%10)
-            num/=10
-    return len(onetonine)==0
+Find the sum of all products whose multiplicand/multiplier/product identity can be written as a 1 through 9 pandigital.
+"""
 
-
-#totalOrdering
-class prod(Object):
-    def __init__(self,n1,n2):
-        self.n1 = n1
-        self.n2 = n2
-        self.prod = n1*n2
-    __eq__ = lambda self, other: self.n1 == other.n1 || self.n2 ==other.n2
-
-
-
-#TODO:loopa genom alla tal och kolla om de är pandigiprodukter, hitta ett smart roof. använd dict 
-
-    
-       
+from itertools import permutations as permute
+res=set()
+numbers = "123456789"
+for p in [str().join(p) for p in permute(numbers)]:
+    for i in range(4,0,-1): #move * sign
+        for j in range(4,i,-1): #move = sign
+            if int(p[:j])*int(p[j:i+j]) == int(p[i+j:]): #check if pandigi
+                res.add(int(p[i+j:])) 
+print sum(res)
